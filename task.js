@@ -3,16 +3,23 @@ function setCookie(name, value, maxAgeSec) {
 }
 
 function getCookie(name) {
-    try {
+    if (document.cookie) {
         const pairs = document.cookie.split('; ');
         const cookie = pairs.find(p => p.startsWith(name + '='));
-        return cookie.substring(name.length + 1);
+
+        if (cookie) {
+            return cookie.substring(name.length + 1);
+        }
+        else {
+            return false;
+        }
+
     }
-    catch {
-        return null;
+    else {
+        return false;
     }
-    
 }
+    
 
 const popup = document.getElementById('subscribe-modal');
 
@@ -24,6 +31,6 @@ else {
 }
 
 popup.querySelector('.modal__close').addEventListener('click', () => {
-    setCookie('popup', 'viewed', 3600);
+    setCookie('popup', 'viewed', 10);
     popup.classList.remove('modal_active');
 });
